@@ -25,8 +25,9 @@ async def firstkill(message: Message):
     allow_channels=False
 )
 async def auto_fk(message: Message):
-    deads = await format_fk(message)
-    await message.reply("\n".join(deads))
+    msg = message.reply("Obtendo FK.")
+    deads = "\n".join(await format_fk(message))
+    await msg.edit(deads)
 
 
 async def format_fk(message):
