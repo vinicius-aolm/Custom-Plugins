@@ -80,7 +80,6 @@ async def build_list(lines):
 
 
 async def order_fk(deads, players):
-    dead_count = len(deads)
     br = "\n"
     if players <= 7:
         sl_first = slice(1)
