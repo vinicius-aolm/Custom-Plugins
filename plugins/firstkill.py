@@ -32,7 +32,7 @@ async def firstkill(message: Message):
         try:
             if ("-d" in command[1]):
                 user = "".join(command[2:])
-                if user in FK
+                if user in FK:
                     FK = re.sub(user, "", FK)
                 else:
                     info = await message.reply("O usuário não está na lista.")
