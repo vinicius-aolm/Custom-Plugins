@@ -27,7 +27,7 @@ async def firstkill(message: Message):
 async def auto_fk(message: Message):
     deads = await build_list(message.text)
     deads = "\n".join(deads)
-    await msg.edit(deads)
+    await message.reply(deads)
 
 
 async def find_dead(line):
