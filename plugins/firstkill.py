@@ -6,6 +6,7 @@ LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
 AFK = []
 FIX = ""
+CHAT = [-1001360580171, -1001199769918]
 
 
 @userge.on_cmd(
@@ -21,7 +22,7 @@ async def firstkill(message: Message):
 
 @userge.on_filters(
     (
-        filters.chat(-1001360580171) &
+        filters.chat(CHAT) &
         filters.regex("Tempo total do jogo|Duração da partida")
     ),
     allow_private=False,
@@ -30,7 +31,7 @@ async def firstkill(message: Message):
 async def auto_fk(message: Message):
     global AFK
     lines = message.text
-    lines_count = len(lines.split("\n"))
+    lines_count = len(lines.split("\n\n")[0]) - 1
     info = await message.reply("Obtendo FK.")
     try:
         deads = await build_list(lines)
@@ -48,7 +49,7 @@ async def auto_fk(message: Message):
 
 @userge.on_filters(
     (
-        filters.chat(-1001360580171) &
+        filters.chat(CHAT) &
         filters.regex("\(id:.*\)")
     ),
     allow_private=False,
