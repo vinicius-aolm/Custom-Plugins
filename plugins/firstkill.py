@@ -3,6 +3,7 @@ from userge import userge, Message, filters
 
 LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
+AFK = []
 
 
 @userge.on_cmd(
@@ -25,10 +26,29 @@ async def firstkill(message: Message):
     allow_channels=False
 )
 async def auto_fk(message: Message):
+    global AFK
     deads = await build_list(message.text)
+    deads = [dead for dead in deads if dead not in AFK]
+    AFK = []
     deads = "\n".join(deads)
     await message.reply(deads)
 
+
+@userge.on_filters(
+    (
+        filters.chat(-1001199769918) &
+        filters.regex("\(id:.*\)")
+    ),
+    allow_private=False,
+    allow_channels=False
+)
+async def auto_afk(message: Message):
+    global AFK
+    lines = re.sub("🥇|🥉|🥈", "", message.text)
+    afk = ["".join(re.findall("^.*\(id:.*\)", afk)) for afk in lines.split("\n")]
+    afk = re.sub("\(id:.*\)", "", "".join(afk)).strip()
+    AFK.append(afk)
+ 
 
 async def find_dead(line):
     name = re.sub("🥇|🥉|🥈", "", line)
