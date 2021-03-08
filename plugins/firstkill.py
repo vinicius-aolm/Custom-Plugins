@@ -25,13 +25,7 @@ async def firstkill(message: Message):
     allow_channels=False
 )
 async def auto_fk(message: Message):
-    msg = await message.reply("Obtendo FK.")
-    deads = []
-    for line in message.text.split("\n"):
-        name = await find_dead(line)
-        if not name:
-            continue
-        deads.append(name)
+    deads = await build_list(message.text)
     deads = "\n".join(deads)
     await msg.edit(deads)
 
@@ -41,3 +35,13 @@ async def find_dead(line):
     dead = "".join(re.findall("^.*: 💀", name))
     name = re.sub(": 💀", "", dead)
     return name
+
+
+async def build_list(lines):
+    deads = []
+    for line in lines.split("\n"):
+        name = await find_dead(line)
+        if not name:
+            continue
+        deads.append(name)
+    return deads
