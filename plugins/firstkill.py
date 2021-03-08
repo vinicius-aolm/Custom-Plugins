@@ -32,7 +32,7 @@ async def auto_fk(message: Message):
     global AFK
     lines = message.text
     lines_count = len(lines.split("\n\n")[0].split("\n")) - 1
-    info = await message.reply("Obtendo FK.")
+    info = await userge.send_message(message.chat.id, "Obtendo FK.")
     try:
         deads = await build_list(lines)
         deads = [dead for dead in deads if dead not in AFK]
