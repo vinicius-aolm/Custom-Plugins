@@ -1,6 +1,6 @@
 import re
 import asyncio
-from userge import userge, Config, Message, filters
+from userge import userge, Message, filters
 
 LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
