@@ -15,21 +15,31 @@ CHAT = [-1001199769918]
 WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
 
 
-#@userge.on_filters(
-#    (
-#        filters.command("fk") &
-#        filters.chat(CHAT) &
-#        ~filters.bot
-#    )
-#)
-#async def firstkill(message: Message):
-#    if await is_sr(message):
-#        await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
-#        FK = ""
-#    elif FK:
-#        await message.reply(FK)
-#    else:
-#        await message.reply("❌ Sem FK ❌")
+@userge.on_filters(
+    (
+        filters.command("fk") &
+        filters.chat(CHAT) &
+        ~filters.bot
+    )
+)
+async def firstkill(message: Message):
+    global FK
+    command = message.text.split()
+    elif await is_sr(message):
+        await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
+        FK = ""
+    elif FK:
+        if ("-" not in command[1]):
+            await message.reply(FK)
+        elif ("-d" in command[1]):
+            try:
+                FK.pop(FK.index(command[2:]))
+            except:
+                info = await message.reply("O usuário não está na lista.")
+                asyncio.sleep(5)
+                await info.delete()
+    else:
+        await message.reply("❌ Sem FK ❌")
 
 
 @userge.on_filters(
