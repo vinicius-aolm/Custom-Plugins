@@ -100,6 +100,7 @@ async def order_fk(deads, players):
         action = "2ª FORCA"
     else:
         output = "❌ Sem fk ❌ tenha senso."
+        return output
     preout = (
         f"🚩 FK\n"
         f"{first}\n\n"
