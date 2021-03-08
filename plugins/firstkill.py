@@ -1,6 +1,10 @@
 import re
 import asyncio
+import pytz
+from datetime import datetime
+
 from userge import userge, Message, filters
+
 
 LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
@@ -133,5 +137,7 @@ async def order_fk(deads, players):
 async def is_sr(message):
     title = message.chat.title
     sr = re.findall("SEM REGRAS", title)
-    if sr:
+    tz = pytz.timezone("America/Sao_Paulo")
+    hour = datetime.now().astimezone(tz).hour
+    if sr and hour >= 23:
         return True
