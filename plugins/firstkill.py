@@ -31,7 +31,7 @@ async def auto_fk(message: Message):
 
 async def format_fk(message):
     text = re.sub("🥇|🥉|🥈", "", message.text)
-    deads = [re.findall("^.*💀", dead) for dead in text.split("\n")]
+    deads = [re.findall("^.*: 💀", dead) for dead in text.split("\n")]
     names = []
     for dead in deads:
         unformatted = "".join(dead)
