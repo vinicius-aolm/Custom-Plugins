@@ -31,11 +31,15 @@ async def auto_fk(message: Message):
     lines = message.text
     lines_count = len(lines.split("\n"))
     info = await message.reply("Obtendo FK.")
-    deads = await build_list(lines)
-    deads = [dead for dead in deads if dead not in AFK]
-    AFK = []
-    output = await order_fk(deads, lines_count)
-    await info.edit(output)
+    try:
+        deads = await build_list(lines)
+        deads = [dead for dead in deads if dead not in AFK]
+        AFK = []
+        output = await order_fk(deads, lines_count)
+        await info.edit(output)
+    except:
+        AFK = []
+        await info.edit("Ocorreu um erro ao obter o FK.")
 
 
 @userge.on_filters(
@@ -73,16 +77,16 @@ async def build_list(lines):
 
 async def order_fk(deads, players):
     if players <= 7:
-        first, evite = dead[0], ""  # 1 fk
+        first, evite = deads[0], ""  # 1 fk
         action = "1ª MORTE"
     elif players <= 10:
-        first, evite = dead[0], dead[1]  # 1 fk, 1 evite
+        first, evite = deads[0], deads[1]  # 1 fk, 1 evite
         action = "1ª FORCA"
     elif players <= 15:
-        first, evite = "\n".join(dead[:1]), "\n".join(dead[2:3])  # 2 fk, 2 evite
+        first, evite = "\n".join(deads[:1]), "\n".join(deads[2:3])  # 2 fk, 2 evite
         action = "1ª FORCA"
     else:
-        first, evite = "\n".join(dead[:2]), "\n".join(dead[3:5])  # 3 fk, 3 evite
+        first, evite = "\n".join(deads[:2]), "\n".join(deads[3:5])  # 3 fk, 3 evite
         action = "2ª FORCA"
     preout = (
         f"🚩 FK\n"
