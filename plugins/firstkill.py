@@ -20,7 +20,7 @@ async def firstkill(message: Message):
 
 @userge.on_filters(
     (
-        filters.chat(-1001199769918) &
+        filters.chat(-1001360580171) &
         filters.regex("Tempo total do jogo|Duração da partida")
     ),
     allow_private=False,
@@ -45,7 +45,7 @@ async def auto_fk(message: Message):
 
 @userge.on_filters(
     (
-        filters.chat(-1001199769918) &
+        filters.chat(-1001360580171) &
         filters.regex("\(id:.*\)")
     ),
     allow_private=False,
