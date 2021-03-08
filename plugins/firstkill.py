@@ -6,7 +6,7 @@ from userge import Message, userge
     "firstkill",
     about={
         "header": "Get first kill of the last werewolf game. Only works in @LobinhoRepublica.",
-        "usage": "{tr}fk or wait to for the game to finish.",
+        "usage": "{tr}fk or wait for the game to finish.",
     },
 )
 @userge.on_filters(
