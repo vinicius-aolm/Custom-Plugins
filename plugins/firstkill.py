@@ -29,6 +29,8 @@ async def auto_fk(message: Message):
     deads = []
     for line in message.text.split("\n"):
         name = await find_dead(line)
+        if not name:
+            continue
         deads.append(name)
     deads = "\n".join(deads)
     await msg.edit(deads)
