@@ -39,7 +39,8 @@ async def firstkill(message: Message):
                     await info.delete()
         except:
             await message.reply(FK)
-    await message.reply("❌ Sem FK ❌")
+    else:
+        await message.reply("❌ Sem FK ❌")
 
 
 @userge.on_filters(
