@@ -15,20 +15,20 @@ CHAT = [-1001199769918]
 WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
 
 
-@userge.on_filters(
-    (
-        filters.command("fk") &
-        filters.chat(CHAT) &
-        ~filters.bot
-    )
-)
-async def firstkill(message: Message):
-    if await is_sr(message):
-        await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
-    elif FK:
-        await message.reply(FK)
-    else:
-        await message.reply("❌ Sem FK ❌")
+#@userge.on_filters(
+#    (
+#        filters.command("fk") &
+#        filters.chat(CHAT) &
+#        ~filters.bot
+#    )
+#)
+#async def firstkill(message: Message):
+#    if await is_sr(message):
+#        await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
+#    elif FK:
+#        await message.reply(FK)
+#    else:
+#        await message.reply("❌ Sem FK ❌")
 
 
 @userge.on_filters(
