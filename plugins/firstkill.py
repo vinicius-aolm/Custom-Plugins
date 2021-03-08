@@ -1,4 +1,5 @@
 import re
+import asyncio
 from userge import userge, Message, filters
 
 LOG = userge.getLogger(__name__)
@@ -40,6 +41,8 @@ async def auto_fk(message: Message):
     except Exception as e:
         AFK = []
         await info.edit("Ocorreu um erro ao obter o FK.")
+        await asyncio.sleep(2)
+        await info.delete()
         await CHANNEL.log(f"{e}")
 
 
