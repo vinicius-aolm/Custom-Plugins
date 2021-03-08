@@ -11,23 +11,16 @@ CHAT = [-1001199769918]
 WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
 
 
-@userge.on_cmd(
-    "fk",
-    about = {
-        "header": "Get first kill of the last werewolf game. Only works in @LobinhoRepublica.",
-        "usage": "{tr}fk or wait for the game to finish.",
-    },
-    trigger = "/",
-    filter_me = False
-)
 @userge.on_filters(
     (
+        filters.command("fk") &
         filters.chat(CHAT) &
         ~filters.bot
     )
 )
 async def firstkill(message: Message):
-    await message.reply(FK)
+    if FK:
+        await message.reply(FK)
 
 
 @userge.on_filters(
