@@ -25,6 +25,7 @@ WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # wer
 #async def firstkill(message: Message):
 #    if await is_sr(message):
 #        await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
+#        FK = ""
 #    elif FK:
 #        await message.reply(FK)
 #    else:
@@ -42,6 +43,7 @@ async def auto_fk(message: Message):
     global AFK
     global FK
     if await is_sr(message):
+        FK = ""
         return
     lines = message.text
     lines_count = len(lines.split("\n\n")[0].split("\n")) - 1
