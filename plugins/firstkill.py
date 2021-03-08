@@ -26,17 +26,16 @@ async def firstkill(message: Message):
 )
 async def auto_fk(message: Message):
     msg = message.reply("Obtendo FK.")
-    deads = "\n".join(await format_fk(message))
+    deads = []
+    for line in message.text.split("\n"):
+        name = await find_dead(line)
+        deads.append(name)
+    deads = "\n".join(deads)
     await msg.edit(deads)
 
 
-async def format_fk(message):
-    text = re.sub("🥇|🥉|🥈", "", message.text)
-    deads = [re.findall("^.*: 💀", dead) for dead in text.split("\n")]
-    names = []
-    for dead in deads:
-        unformatted = "".join(dead)
-        if not unformatted:
-            continue
-        names.append(re.sub(": 💀", "", unformatted))
-    return names
+async def find_dead(line):
+    name = re.sub("🥇|🥉|🥈", "", line)
+    dead = "".join(re.findall("^.*: 💀", name))
+    name = re.sub(": 💀", "", dead)
+    return name
