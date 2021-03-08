@@ -84,12 +84,12 @@ async def order_fk(deads, players):
     br = "\n"
     if players <= 7:
         sl_first = slice(1)
-        first = deads[sl]  # 1 fk
+        first = br.join(deads[sl])  # 1 fk
         action = "1ª MORTE"
     elif players <= 10:
         sl_first, sl_evite = slice(1), slice(1, 2)
-        first = deads[sl_first]
-        evite = deads[sl_evite]  # 1 fk, 1 evite
+        first = br.join(deads[sl_first])
+        evite = br.join(deads[sl_evite])  # 1 fk, 1 evite
         action = "1ª FORCA"
     elif players <= 15:
         sl_first, sl_evite = slice(2), slice(2, 4)
