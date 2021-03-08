@@ -83,7 +83,8 @@ async def order_fk(deads, players):
     br = "\n"
     if players <= 7:
         sl_first = slice(1)
-        first = br.join(deads[sl_first])  # 1 fk
+        first = br.join(deads[sl_first])
+        evite = ""  # 1 fk
         action = "1ª MORTE"
     elif players <= 10:
         sl_first, sl_evite = slice(1), slice(1, 2)
@@ -108,11 +109,11 @@ async def order_fk(deads, players):
         f"{first}\n\n"
         f"VALE ATÉ A {action}!\n\n"
     )
+    posout = (
+        f"🐺 EVITE MATAR CEDO\n"
+        f"{evite}\n\n"
+    )
     if evite:
-        posout = (
-            f"🐺 EVITE MATAR CEDO\n"
-            f"{evite}\n\n"
-        )
         output = preout + posout + FIX
     else:
         output = preout + FIX
