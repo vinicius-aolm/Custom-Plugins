@@ -81,35 +81,39 @@ async def build_list(lines):
 
 async def order_fk(deads, players):
     dead_count = len(deads)
-    if players <= 7 and dead_count >= 1:
-        first = deads[0]
-        evite = ""  # 1 fk
+    br = "\n"
+    if players <= 7:
+        sl_first = slice(1)
+        first = deads[sl]  # 1 fk
         action = "1ª MORTE"
-    elif players <= 10 and dead_count >= 2:
-        first = deads[0]
-        evite = deads[1]  # 1 fk, 1 evite
+    elif players <= 10:
+        sl_first, sl_evite = slice(1), slice(1, 2)
+        first = deads[sl_first]
+        evite = deads[sl_evite]  # 1 fk, 1 evite
         action = "1ª FORCA"
-    elif players <= 15 and dead_count >= 4:
-        first = "\n".join(deads[:2])
-        evite = "\n".join(deads[2:4])  # 2 fk, 2 evite
+    elif players <= 15:
+        sl_first, sl_evite = slice(2), slice(2, 4)
+        first = br.join(deads[sl_first])
+        evite = br.join(deads[sl_evite])  # 2 fk, 2 evite
         action = "1ª FORCA"
-    elif players >= 16 and dead_count >= 6:
-        first = "\n".join(deads[:3])
-        evite = "\n".join(deads[3:6])  # 3 fk, 3 evite
+    elif players >= 16:
+        sl_first, sl_evite = slice(3), slice(3, 6)
+        first = br.join(deads[sl_first])
+        evite = br.join(deads[sl_evite])  # 3 fk, 3 evite
         action = "2ª FORCA"
     else:
-        output = "❌ Sem FK ❌ tenha senso."
+        output = "O FK é... ninguém."
         return output
     preout = (
         f"🚩 FK\n"
         f"{first}\n\n"
         f"VALE ATÉ A {action}!\n\n"
     )
-    posout = (
-        f"🐺 EVITE MATAR CEDO\n"
-        f"{evite}\n\n"
-    )
     if evite:
+        posout = (
+            f"🐺 EVITE MATAR CEDO\n"
+            f"{evite}\n\n"
+        )
         output = preout + posout + FIX
     else:
         output = preout + FIX
