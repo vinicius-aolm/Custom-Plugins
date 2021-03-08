@@ -1,12 +1,22 @@
 import re
 import asyncio
-from userge import userge, Message, filters
+from userge import userge, Config, Message, filters
 
 LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
 AFK = []
 FIX = ""
 CHAT = [-1001360580171, -1001199769918]
+WW = [1029642148, 980444671, 618096097, 175844556]  # werewolf bots
+
+TESTER = Config.SUDO_USERS
+TESTER = list(TESTER)
+[TESTER.append(id) for id in Config.OWNER_ID]
+
+CHAT_WW = (
+    filters.chat(CHAT) &
+    filters.user(WW + TESTER)
+)
 
 
 @userge.on_cmd(
@@ -14,7 +24,7 @@ CHAT = [-1001360580171, -1001199769918]
     about={
         "header": "Get first kill of the last werewolf game. Only works in @LobinhoRepublica.",
         "usage": "{tr}fk or wait for the game to finish.",
-    },
+    }
 )
 async def firstkill(message: Message):
     pass
@@ -22,11 +32,9 @@ async def firstkill(message: Message):
 
 @userge.on_filters(
     (
-        filters.chat(CHAT) &
+        CHAT_WW &
         filters.regex("Tempo total do jogo|Duração da partida")
-    ),
-    allow_private=False,
-    allow_channels=False
+    )
 )
 async def auto_fk(message: Message):
     global AFK
@@ -49,11 +57,9 @@ async def auto_fk(message: Message):
 
 @userge.on_filters(
     (
-        filters.chat(CHAT) &
+        CHAT_WW &
         filters.regex("\(id:.*\)")
-    ),
-    allow_private=False,
-    allow_channels=False
+    )
 )
 async def auto_afk(message: Message):
     global AFK
@@ -99,7 +105,7 @@ async def order_fk(deads, players):
         evite = "\n".join(deads[3:6])  # 3 fk, 3 evite
         action = "2ª FORCA"
     else:
-        output = "❌ Sem fk ❌ tenha senso."
+        output = "❌ Sem FK ❌ tenha senso."
         return output
     preout = (
         f"🚩 FK\n"
