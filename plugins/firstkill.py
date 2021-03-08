@@ -1,5 +1,6 @@
 import asyncio
 import random
+from pyrogram import filters
 from userge import Message, userge
 @userge.on_cmd(
     "firstkill",
