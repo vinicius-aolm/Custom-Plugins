@@ -37,6 +37,8 @@ async def firstkill(message: Message):
 async def auto_fk(message: Message):
     global AFK
     global FK
+    if await is_sr(message):
+        return
     lines = message.text
     lines_count = len(lines.split("\n\n")[0].split("\n")) - 1
     info = await userge.send_message(message.chat.id, "Obtendo FK.")
