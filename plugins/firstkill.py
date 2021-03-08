@@ -29,17 +29,17 @@ async def firstkill(message: Message):
         await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
         FK = ""
     elif FK:
-        if ("-" not in command[1]):
+        try:
+            if ("-d" in command[1]):
+                try:
+                    FK.pop(FK.index(command[2:]))
+                except:
+                    info = await message.reply("O usuário não está na lista.")
+                    asyncio.sleep(5)
+                    await info.delete()
+        except:
             await message.reply(FK)
-        elif ("-d" in command[1]):
-            try:
-                FK.pop(FK.index(command[2:]))
-            except:
-                info = await message.reply("O usuário não está na lista.")
-                asyncio.sleep(5)
-                await info.delete()
-    else:
-        await message.reply("❌ Sem FK ❌")
+    await message.reply("❌ Sem FK ❌")
 
 
 @userge.on_filters(
