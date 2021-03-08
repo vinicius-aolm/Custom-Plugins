@@ -6,19 +6,28 @@ LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
 AFK = []
 FIX = ""
+FK = "foo"
 CHAT = [-1001360580171, -1001199769918]
 WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
 
 
 @userge.on_cmd(
     "fk",
-    about={
+    about = {
         "header": "Get first kill of the last werewolf game. Only works in @LobinhoRepublica.",
         "usage": "{tr}fk or wait for the game to finish.",
-    }
+    },
+    trigger = "/",
+    filter_me = False
+)
+@userge.on_filters(
+    (
+        filters.chat(CHAT) &
+        ~filters.bot
+    )
 )
 async def firstkill(message: Message):
-    pass
+    await message.reply(FK)
 
 
 @userge.on_filters(
@@ -30,21 +39,23 @@ async def firstkill(message: Message):
 )
 async def auto_fk(message: Message):
     global AFK
+    global FK
     lines = message.text
     lines_count = len(lines.split("\n\n")[0].split("\n")) - 1
     info = await userge.send_message(message.chat.id, "Obtendo FK.")
     try:
         deads = await build_list(lines)
         deads = [dead for dead in deads if dead not in AFK]
-        AFK = []
         output = await order_fk(deads, lines_count)
         await info.edit(output)
+        FK = output
     except Exception as e:
-        AFK = []
         await info.edit("Ocorreu um erro ao obter o FK.")
         await asyncio.sleep(5)
         await info.delete()
         await CHANNEL.log(f"{e}")
+        FK = ""
+    AFK = []
 
 
 @userge.on_filters(
