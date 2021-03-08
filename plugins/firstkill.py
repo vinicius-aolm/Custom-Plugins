@@ -7,11 +7,11 @@ CHANNEL = userge.getCLogger(__name__)
 AFK = []
 FIX = ""
 CHAT = [-1001360580171, -1001199769918]
-WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots
+WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
 
 
 @userge.on_cmd(
-    "firstkill",
+    "fk",
     about={
         "header": "Get first kill of the last werewolf game. Only works in @LobinhoRepublica.",
         "usage": "{tr}fk or wait for the game to finish.",
