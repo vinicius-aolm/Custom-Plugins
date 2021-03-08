@@ -21,6 +21,10 @@ WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # wer
 async def firstkill(message: Message):
     if FK:
         await message.reply(FK)
+    elif await is_sr(message):
+        await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
+    else:
+        await message.reply("❌ Sem FK ❌")
 
 
 @userge.on_filters(
@@ -122,3 +126,10 @@ async def order_fk(deads, players):
     else:
         output = preout + FIX
     return output
+
+
+async def is_sr(message):
+    title = message.chat.title
+    sr = re.findall("SEM REGRAS", title)
+    if sr:
+        return True
