@@ -42,7 +42,7 @@ async def auto_fk(message: Message):
     except Exception as e:
         AFK = []
         await info.edit("Ocorreu um erro ao obter o FK.")
-        await asyncio.sleep(2)
+        await asyncio.sleep(5)
         await info.delete()
         await CHANNEL.log(f"{e}")
 
@@ -81,22 +81,25 @@ async def build_list(lines):
 
 
 async def order_fk(deads, players):
-    if players <= 7:
+    dead_count = len(deads)
+    if players <= 7 && dead_count >= 1:
         first = deads[0]
         evite = ""  # 1 fk
         action = "1ª MORTE"
-    elif players <= 10:
+    elif players <= 10 && dead_count >= 2:
         first = deads[0]
         evite = deads[1]  # 1 fk, 1 evite
         action = "1ª FORCA"
-    elif players <= 15:
+    elif players <= 15 && dead_count >= 4:
         first = "\n".join(deads[:2])
         evite = "\n".join(deads[2:4])  # 2 fk, 2 evite
         action = "1ª FORCA"
-    else:
+    elif players >= 16 and dead_count >= 6:
         first = "\n".join(deads[:3])
         evite = "\n".join(deads[3:6])  # 3 fk, 3 evite
         action = "2ª FORCA"
+    else:
+        output = "❌ Sem fk ❌ tenha senso."
     preout = (
         f"🚩 FK\n"
         f"{first}\n\n"
