@@ -1,7 +1,9 @@
-import asyncio
-import random
-from pyrogram import filters
-from userge import Message, userge
+from userge import userge, Message, filters
+
+LOG = userge.getLogger(__name__)
+CHANNEL = userge.getCLogger(__name__)
+
+
 @userge.on_cmd(
     "firstkill",
     about={
@@ -9,6 +11,10 @@ from userge import Message, userge
         "usage": "{tr}fk or wait for the game to finish.",
     },
 )
+async def firstkill(message: Message):
+    pass
+
+
 @userge.on_filters(
     (
         filters.chat(-1001199769918) &
@@ -17,23 +23,9 @@ from userge import Message, userge
     allow_private=False,
     allow_channels=False
 )
-async def firstkill(message: Message):
+async def auto_fk(message: Message):
     await message.reply("/candy_corn")
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #await message.edit(f"{(await userge.get_users(message.reply_to_message.from_user.id)).first_name} has: \n**1. IQ :** {random.choice(range(0,1000))}% \n**2. Dik Size :** {random.choice(range(0,10))} centimeter\n**3. Lie Meter Reading :** {random.choice(range(0,100))}% \n**4. Gey Count :** {random.choice(range(0,100))}%")
+async def format_fk(message):
+    pass
