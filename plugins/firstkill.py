@@ -25,7 +25,7 @@ async def firstkill(message: Message):
     allow_channels=False
 )
 async def auto_fk(message: Message):
-    msg = message.reply("Obtendo FK.")
+    msg = await message.reply("Obtendo FK.")
     deads = []
     for line in message.text.split("\n"):
         name = await find_dead(line)
