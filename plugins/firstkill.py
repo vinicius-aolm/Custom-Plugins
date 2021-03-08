@@ -14,8 +14,6 @@ TESTER = list(TESTER)
 [TESTER.append(id) for id in Config.OWNER_ID]
 
 CHAT_WW = (
-    filters.chat(CHAT) &
-    filters.user(WW + TESTER)
 )
 
 
@@ -32,7 +30,8 @@ async def firstkill(message: Message):
 
 @userge.on_filters(
     (
-        CHAT_WW &
+        filters.chat(CHAT) &
+        filters.user(WW + TESTER) &
         filters.regex("Tempo total do jogo|Duração da partida")
     )
 )
@@ -57,7 +56,8 @@ async def auto_fk(message: Message):
 
 @userge.on_filters(
     (
-        CHAT_WW &
+        filters.chat(CHAT) &
+        filters.user(WW + TESTER) &
         filters.regex("\(id:.*\)")
     )
 )
