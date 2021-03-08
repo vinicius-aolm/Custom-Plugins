@@ -37,9 +37,10 @@ async def auto_fk(message: Message):
         AFK = []
         output = await order_fk(deads, lines_count)
         await info.edit(output)
-    except:
+    except Exception as e:
         AFK = []
         await info.edit("Ocorreu um erro ao obter o FK.")
+        await CHANNEL.log(f"{e}")
 
 
 @userge.on_filters(
@@ -77,16 +78,20 @@ async def build_list(lines):
 
 async def order_fk(deads, players):
     if players <= 7:
-        first, evite = deads[0], ""  # 1 fk
+        first = deads[0]
+        evite = ""  # 1 fk
         action = "1ª MORTE"
     elif players <= 10:
-        first, evite = deads[0], deads[1]  # 1 fk, 1 evite
+        first = deads[0]
+        evite = deads[1]  # 1 fk, 1 evite
         action = "1ª FORCA"
     elif players <= 15:
-        first, evite = "\n".join(deads[:1]), "\n".join(deads[2:3])  # 2 fk, 2 evite
+        first = "\n".join(deads[:2])
+        evite = "\n".join(deads[2:4])  # 2 fk, 2 evite
         action = "1ª FORCA"
     else:
-        first, evite = "\n".join(deads[:2]), "\n".join(deads[3:5])  # 3 fk, 3 evite
+        first = "\n".join(deads[:3])
+        evite = "\n".join(deads[3:6])  # 3 fk, 3 evite
         action = "2ª FORCA"
     preout = (
         f"🚩 FK\n"
@@ -98,7 +103,7 @@ async def order_fk(deads, players):
         f"{evite}\n\n"
     )
     if evite:
-        output = preout + posout
+        output = preout + posout + FIX
     else:
-        output = preout
+        output = preout + FIX
     return output
