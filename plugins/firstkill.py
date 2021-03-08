@@ -6,7 +6,7 @@ LOG = userge.getLogger(__name__)
 CHANNEL = userge.getCLogger(__name__)
 AFK = []
 FIX = ""
-FK = "foo"
+FK = ""
 CHAT = [-1001199769918]
 WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
 
