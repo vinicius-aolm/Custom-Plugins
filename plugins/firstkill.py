@@ -139,5 +139,5 @@ async def is_sr(message):
     sr = re.findall("SEM REGRAS", title)
     tz = pytz.timezone("America/Sao_Paulo")
     hour = datetime.now().astimezone(tz).hour
-    if sr and hour >= 23:
+    if sr or hour >= 23:
         return True
