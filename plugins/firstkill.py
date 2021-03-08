@@ -1,3 +1,4 @@
+import re
 from userge import userge, Message, filters
 
 LOG = userge.getLogger(__name__)
@@ -24,8 +25,15 @@ async def firstkill(message: Message):
     allow_channels=False
 )
 async def auto_fk(message: Message):
-    await message.reply("/candy_corn")
+    deads = await format_fk(message)
+    await message.reply("\n".join(deads))
 
 
 async def format_fk(message):
-    pass
+    text = re.sub("🥇|🥉|🥈", "", message.text)
+    deads = [re.findall("^.*💀", dead) for dead in text.split("\n")]
+    names = []
+    for dead in deads:
+        unformatted = "".join(dead)
+        names.append(re.sub(": 💀", "", unformatted))
+    return names
