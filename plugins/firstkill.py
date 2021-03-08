@@ -82,15 +82,15 @@ async def build_list(lines):
 
 async def order_fk(deads, players):
     dead_count = len(deads)
-    if players <= 7 && dead_count >= 1:
+    if players <= 7 and dead_count >= 1:
         first = deads[0]
         evite = ""  # 1 fk
         action = "1ª MORTE"
-    elif players <= 10 && dead_count >= 2:
+    elif players <= 10 and dead_count >= 2:
         first = deads[0]
         evite = deads[1]  # 1 fk, 1 evite
         action = "1ª FORCA"
-    elif players <= 15 && dead_count >= 4:
+    elif players <= 15 and dead_count >= 4:
         first = "\n".join(deads[:2])
         evite = "\n".join(deads[2:4])  # 2 fk, 2 evite
         action = "1ª FORCA"
