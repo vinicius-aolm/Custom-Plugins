@@ -36,5 +36,7 @@ async def format_fk(message):
     names = []
     for dead in deads:
         unformatted = "".join(dead)
+        if not unformatted:
+            continue
         names.append(re.sub(": 💀", "", unformatted))
     return names
