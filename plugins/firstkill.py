@@ -19,10 +19,10 @@ WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # wer
     )
 )
 async def firstkill(message: Message):
-    if FK:
-        await message.reply(FK)
-    elif await is_sr(message):
+    if await is_sr(message):
         await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
+    elif FK:
+        await message.reply(FK)
     else:
         await message.reply("❌ Sem FK ❌")
 
