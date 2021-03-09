@@ -17,7 +17,7 @@ WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # wer
 
 @userge.on_filters(
     (
-        filters.command("fk") &
+        filters.command("fk", ",") &
         filters.chat(CHAT) &
         ~filters.bot
     )
