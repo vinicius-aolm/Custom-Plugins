@@ -11,8 +11,8 @@ CHANNEL = userge.getCLogger(__name__)
 AFK = []
 FIX = ""
 FK = ""
-CHAT = [-1001199769918]
-WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots and testers
+CHAT = [-1001199769918, -1001360580171]  # rdl
+WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # werewolf bots
 
 
 @userge.on_filters(
