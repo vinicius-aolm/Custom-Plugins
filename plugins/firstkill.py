@@ -29,16 +29,20 @@ async def firstkill(message: Message):
         await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
         FK = ""
     elif FK:
-        try:
-            if ("-d" in command[1]):
-                user = "".join(command[2:])
-                if user in FK:
-                    FK = re.sub(user, "", FK)
-                else:
-                    info = await message.reply("O usuário não está na lista.")
-                    await asyncio.sleep(5)
-                    await info.delete()
-        except:
+        command_str = " ".join(command)
+        flag_d = re.findall(".fk -d", command_str)
+        if flag_d:
+            user = " ".join(command[2:])
+            if user in FK:
+                FK = re.sub(user, "", FK)
+                info = await message.reply("Usuario deletado.")
+                await asyncio.sleep(5)
+                await info.delete()
+            else:
+                info = await message.reply("O usuário não está na lista.")
+                await asyncio.sleep(5)
+                await info.delete()
+        else:
             await message.reply(FK)
     else:
         await message.reply("❌ Sem FK ❌")
