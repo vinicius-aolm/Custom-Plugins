@@ -24,7 +24,7 @@ WW = [1029642148, 980444671, 618096097, 175844556, 738172950, 1569645653]  # wer
 )
 async def firstkill(message: Message):
     global FK
-    FK = FK.stip()
+    FK = FK.strip()
     command = message.text.split()
     if await is_sr(message):
         await message.reply("❌ Sem Regras, Sem FK ❌ Tenha Senso")
