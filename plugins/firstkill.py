@@ -35,11 +35,11 @@ async def firstkill(message: Message):
             user = " ".join(command[2:])
             if user in FK:
                 FK = re.sub(user, "", FK)
-                info = await message.reply("Usuario deletado.")
+                info = await message.reply("Usuario deletado do FK.")
                 await asyncio.sleep(5)
                 await info.delete()
             else:
-                info = await message.reply("O usuário não está na lista.")
+                info = await message.reply("O usuário não está na lista de FK.")
                 await asyncio.sleep(5)
                 await info.delete()
         else:
