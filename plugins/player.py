@@ -19,15 +19,15 @@ VOICE_CHATS = {}
         "usage": "{tr}join_vc"
     }
 )
-async def join_voice_chat(client, message: Message):
-    input_filename = os.path.join(client.workdir, DEFAULT_DOWNLOAD_DIR,
+async def join_voice_chat(message: Message):
+    input_filename = os.path.join(userge.workdir, DEFAULT_DOWNLOAD_DIR,
                                   "input.raw")
     if message.chat.id in VOICE_CHATS:
         response = " Already Joined the Voice Chat"
         await update_userbot_message(message, message.text, response)
         return
     chat_id = message.chat.id
-    group_call = GroupCall(client, input_filename)
+    group_call = GroupCall(userge, input_filename)
     await group_call.start(chat_id, False)
     VOICE_CHATS[chat_id] = group_call
     response = " Joined the Voice Chat"
@@ -41,7 +41,7 @@ async def join_voice_chat(client, message: Message):
         "usage": "{tr}leave_vc"
     }
 )
-async def leave_voice_chat(client, message: Message):
+async def leave_voice_chat(message: Message):
     chat_id = message.chat.id
     group_call = VOICE_CHATS[chat_id]
     await group_call.stop()
@@ -56,7 +56,7 @@ async def leave_voice_chat(client, message: Message):
         "usage": "{tr}list_vc"
     }
 )
-async def list_voice_chat(client, message: Message):
+async def list_voice_chat(message: Message):
     if not VOICE_CHATS:
         await update_userbot_message(
             message,
@@ -66,7 +66,7 @@ async def list_voice_chat(client, message: Message):
         return
     vc_chats = ""
     for chat_id in VOICE_CHATS:
-        chat = await client.get_chat(chat_id)
+        chat = await userge.get_chat(chat_id)
         vc_chats += f"- **{chat.title}**\n"
     await update_userbot_message(
         message,
@@ -82,7 +82,7 @@ async def list_voice_chat(client, message: Message):
         "usage": "{tr}stop"
     }
 )
-async def stop_playing(_, message: Message):
+async def stop_playing(message: Message):
     group_call = VOICE_CHATS[message.chat.id]
     group_call.stop_playout()
     await update_userbot_message(message, message.text, " Stopped Playing")
@@ -95,11 +95,11 @@ async def stop_playing(_, message: Message):
         "usage": "{tr}replay"
     }
 )
-async def restart_playing(client, message: Message):
-    input_filename = os.path.join(client.workdir, DEFAULT_DOWNLOAD_DIR,
+async def restart_playing(message: Message):
+    input_filename = os.path.join(userge.workdir, DEFAULT_DOWNLOAD_DIR,
                                   "input.raw")
     if not VOICE_CHATS or message.chat.id not in VOICE_CHATS:
-        group_call = GroupCall(client, input_filename)
+        group_call = GroupCall(userge, input_filename)
         await group_call.start(message.chat.id, False)
         VOICE_CHATS[message.chat.id] = group_call
         await update_userbot_message(
@@ -125,10 +125,10 @@ async def restart_playing(client, message: Message):
         "usage": "{tr}play"
     }
 )
-async def play_track(client, message: Message):
+async def play_track(message: Message):
     if not message.reply_to_message or not message.reply_to_message.audio:
         return
-    input_filename = os.path.join(client.workdir, DEFAULT_DOWNLOAD_DIR,
+    input_filename = os.path.join(userge.workdir, DEFAULT_DOWNLOAD_DIR,
                                   "input.raw")
     audio = message.reply_to_message.audio
     status = "\n- Downloading audio file..."
@@ -144,7 +144,7 @@ async def play_track(client, message: Message):
     ).overwrite_output().run()
     os.remove(audio_original)
     try:
-        async for m in client.search_messages(message.chat.id,
+        async for m in userge.search_messages(message.chat.id,
                                               filter="pinned",
                                               limit=1):
             if m.audio:
@@ -158,7 +158,7 @@ async def play_track(client, message: Message):
         status += f"\n- Playing **{audio.title}**..."
         await update_userbot_message(message, message.text, status)
     else:
-        group_call = GroupCall(client, input_filename)
+        group_call = GroupCall(userge, input_filename)
         await group_call.start(message.chat.id, False)
         VOICE_CHATS[message.chat.id] = group_call
         status += (
@@ -174,7 +174,7 @@ async def play_track(client, message: Message):
         "usage": "{tr}mute"
     }
 )
-async def mute(_, message: Message):
+async def mute(message: Message):
     group_call = VOICE_CHATS[message.chat.id]
     group_call.set_is_mute(True)
     await update_userbot_message(message, message.text, " Muted")
@@ -187,7 +187,7 @@ async def mute(_, message: Message):
         "usage": "{tr}unmute"
     }
 )
-async def unmute(_, message: Message):
+async def unmute(message: Message):
     group_call = VOICE_CHATS[message.chat.id]
     group_call.set_is_mute(False)
     await update_userbot_message(message, message.text, " Unmuted")
