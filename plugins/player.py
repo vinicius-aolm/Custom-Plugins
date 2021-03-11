@@ -143,17 +143,6 @@ async def play_track(message: Message):
         ac=2, ar='48k'
     ).overwrite_output().run()
     os.remove(audio_original)
-    try:
-        async for m in userge.search_messages(message.chat.id,
-                                              filter="pinned",
-                                              limit=1):
-            if m.audio:
-                await m.unpin()
-        await message.reply_to_message.pin(True)
-    except ChatAdminRequired:
-        pass
-    except FloodWait:
-        pass
     if VOICE_CHATS and message.chat.id in VOICE_CHATS:
         status += f"\n- Playing **{audio.title}**..."
         await update_userbot_message(message, message.text, status)
