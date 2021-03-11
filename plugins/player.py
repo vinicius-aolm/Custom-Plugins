@@ -76,10 +76,10 @@ async def list_voice_chat(message: Message):
 
 
 @userge.on_cmd(
-    "stop",
+    "stop_vc",
     about={
         "header": "Stop",
-        "usage": "{tr}stop"
+        "usage": "{tr}stop_vc"
     }
 )
 async def stop_playing(message: Message):
@@ -168,10 +168,10 @@ async def play_track(message: Message):
 
 
 @userge.on_cmd(
-    "mute",
+    "mute_vc",
     about={
         "header": "Mute the userbot in the current voice chat",
-        "usage": "{tr}mute"
+        "usage": "{tr}mute_vc"
     }
 )
 async def mute(message: Message):
@@ -181,10 +181,10 @@ async def mute(message: Message):
 
 
 @userge.on_cmd(
-    "unmute",
+    "unmute_vc",
     about={
         "header": "Unmute the userbot in the current voice chat",
-        "usage": "{tr}unmute"
+        "usage": "{tr}unmute_vc"
     }
 )
 async def unmute(message: Message):
