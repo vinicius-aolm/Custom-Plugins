@@ -9,10 +9,10 @@ group_call = GroupCall(None, path_to_log_file="")
 
 
 def init_client_and_delete_message(func):
-    async def wrapper(userge, message):
+    async def wrapper(message):
         group_call.client = userge
         await message.delete()
-        return await func(userge, message)
+        return await func(message)
     return wrapper
 
 
