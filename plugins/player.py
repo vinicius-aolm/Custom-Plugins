@@ -13,7 +13,6 @@ def init_client_and_delete_message(func):
         group_call.client = client
         await message.delete()
         return await func(client, message)
-
     return wrapper
 
 
@@ -24,7 +23,7 @@ def init_client_and_delete_message(func):
         "usage": "{tr}play",
     },
 )
-async def start_playout(client, message: Message):
+async def start_playout(message: Message):
     group_call.client = client
     if not message.reply_to_message or not message.reply_to_message.audio:
         await message.delete()
@@ -51,7 +50,7 @@ async def start_playout(client, message: Message):
     },
 )
 @init_client_and_delete_message
-async def volume(_, message):
+async def volume(message: Message):
     if len(message.command) < 2:
         await message.reply_text("You forgot to pass volume (1-200)")
     await group_call.set_my_volume(message.command[1])
@@ -65,7 +64,7 @@ async def volume(_, message):
     },
 )
 @init_client_and_delete_message
-async def start(_, message: Message):
+async def start(message: Message):
     await group_call.start(message.chat.id, False)
 
 
@@ -77,7 +76,7 @@ async def start(_, message: Message):
     },
 )
 @init_client_and_delete_message
-async def stop(*_):
+async def stop(message: Message):
     await group_call.stop()
 
 
@@ -89,7 +88,7 @@ async def stop(*_):
     },
 )
 @init_client_and_delete_message
-async def reconnect(*_):
+async def reconnect(message: Message):
     await group_call.reconnect()
 
 
@@ -101,7 +100,7 @@ async def reconnect(*_):
     },
 )
 @init_client_and_delete_message
-async def restart_playout(*_):
+async def restart_playout(message: Message):
     group_call.restart_playout()
 
 
@@ -113,7 +112,7 @@ async def restart_playout(*_):
     },
 )
 @init_client_and_delete_message
-async def stop_playout(*_):
+async def stop_playout(message: Message):
     group_call.stop_playout()
 
 
@@ -125,7 +124,7 @@ async def stop_playout(*_):
     },
 )
 @init_client_and_delete_message
-async def mute(*_):
+async def mute(message: Message):
     group_call.set_is_mute(True)
 
 
@@ -137,5 +136,5 @@ async def mute(*_):
     },
 )
 @init_client_and_delete_message
-async def unmute(*_):
+async def unmute(message: Message):
     group_call.set_is_mute(False)
