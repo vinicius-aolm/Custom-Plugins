@@ -5,7 +5,7 @@ from pytgcalls import GroupCall
 from userge import userge, filters, Message
 
 
-group_call = GroupCall(None, path_to_log_file='')
+group_call = GroupCall(None, path_to_log_file="")
 
 
 def init_client_and_delete_message(func):
@@ -13,6 +13,7 @@ def init_client_and_delete_message(func):
         group_call.client = client
         await message.delete()
         return await func(client, message)
+
     return wrapper
 
 
@@ -20,28 +21,24 @@ def init_client_and_delete_message(func):
     "play",
     about={
         "header": "Reply to an audio to play it in current voice chat",
-        "usage": "{tr}play"
-        }
-    )
+        "usage": "{tr}play",
+    },
+)
 async def start_playout(client, message: Message):
     group_call.client = client
     if not message.reply_to_message or not message.reply_to_message.audio:
         await message.delete()
         return
-    input_filename = 'input.raw'
-    status = '- Downloading... \n'
+    input_filename = "input.raw"
+    status = "- Downloading... \n"
     await message.edit_text(status)
     audio_original = await message.reply_to_message.download()
-    status += '- Converting... \n'
+    status += "- Converting... \n"
     ffmpeg.input(audio_original).output(
-        input_filename,
-        format='s16le',
-        acodec='pcm_s16le',
-        ac=2,
-        ar='48k'
+        input_filename, format="s16le", acodec="pcm_s16le", ac=2, ar="48k"
     ).overwrite_output().run()
     os.remove(audio_original)
-    status += f'- Playing **{message.reply_to_message.audio.title}**...'
+    status += f"- Playing **{message.reply_to_message.audio.title}**..."
     await message.edit_text(status)
     group_call.input_filename = input_filename
 
@@ -50,13 +47,13 @@ async def start_playout(client, message: Message):
     "volume",
     about={
         "header": "Set the volume of the bot in the voice chat",
-        "usage": "{tr}volume <1-200>"
-    }
+        "usage": "{tr}volume <1-200>",
+    },
 )
 @init_client_and_delete_message
 async def volume(_, message):
     if len(message.command) < 2:
-        await message.reply_text('You forgot to pass volume (1-200)')
+        await message.reply_text("You forgot to pass volume (1-200)")
     await group_call.set_my_volume(message.command[1])
 
 
@@ -65,7 +62,7 @@ async def volume(_, message):
     about={
         "header": "Join the current voice chat",
         "usage": "{tr}join_vc"
-    }
+    },
 )
 @init_client_and_delete_message
 async def start(_, message: Message):
@@ -77,7 +74,7 @@ async def start(_, message: Message):
     about={
         "header": "Leave the current voice chat",
         "usage": "{tr}leave_vc"
-    }
+    },
 )
 @init_client_and_delete_message
 async def stop(*_):
@@ -89,7 +86,7 @@ async def stop(*_):
     about={
         "header": "Rejoin the current voice chat",
         "usage": "{tr}rejoin"
-    }
+    },
 )
 @init_client_and_delete_message
 async def reconnect(*_):
@@ -101,7 +98,7 @@ async def reconnect(*_):
     about={
         "header": "Play the track from beginning",
         "usage": "{tr}replay"
-    }
+    },
 )
 @init_client_and_delete_message
 async def restart_playout(*_):
@@ -113,7 +110,7 @@ async def restart_playout(*_):
     about={
         "header": "Stop the current playing track",
         "usage": "{tr}stop"
-    }
+    },
 )
 @init_client_and_delete_message
 async def stop_playout(*_):
@@ -124,8 +121,8 @@ async def stop_playout(*_):
     "mute_vc",
     about={
         "header": "Mute the userbot in the current voice chat",
-        "usage": "{tr}mute_vc"
-    }
+        "usage": "{tr}mute_vc",
+    },
 )
 @init_client_and_delete_message
 async def mute(*_):
@@ -136,8 +133,8 @@ async def mute(*_):
     "unmute_vc",
     about={
         "header": "Unmute the userbot in the current voice chat",
-        "usage": "{tr}unmute_vc"
-    }
+        "usage": "{tr}unmute_vc",
+    },
 )
 @init_client_and_delete_message
 async def unmute(*_):
