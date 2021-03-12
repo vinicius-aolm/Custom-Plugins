@@ -10,7 +10,7 @@ group_call = GroupCall(None, path_to_log_file="")
 
 def init_client_and_delete_message(func):
     async def wrapper(userge, message):
-        group_call.client = client
+        group_call.client = userge
         await message.delete()
         return await func(userge, message)
     return wrapper
@@ -24,7 +24,7 @@ def init_client_and_delete_message(func):
     },
 )
 async def start_playout(message: Message):
-    group_call.client = client
+    group_call.client = userge
     if not message.reply_to_message or not message.reply_to_message.audio:
         await message.delete()
         return
