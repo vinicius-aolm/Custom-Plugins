@@ -12,9 +12,7 @@ def init_client_and_delete_message(func):
     async def wrapper(client, message):
         group_call.client = client
         await message.delete()
-
         return await func(client, message)
-
     return wrapper
 
 
@@ -27,19 +25,14 @@ def init_client_and_delete_message(func):
     )
 async def start_playout(client, message: Message):
     group_call.client = client
-
     if not message.reply_to_message or not message.reply_to_message.audio:
         await message.delete()
         return
-
     input_filename = 'input.raw'
-
     status = '- Downloading... \n'
     await message.edit_text(status)
     audio_original = await message.reply_to_message.download()
-
     status += '- Converting... \n'
-
     ffmpeg.input(audio_original).output(
         input_filename,
         format='s16le',
@@ -47,12 +40,9 @@ async def start_playout(client, message: Message):
         ac=2,
         ar='48k'
     ).overwrite_output().run()
-
     os.remove(audio_original)
-
     status += f'- Playing **{message.reply_to_message.audio.title}**...'
     await message.edit_text(status)
-
     group_call.input_filename = input_filename
 
 
@@ -67,7 +57,6 @@ async def start_playout(client, message: Message):
 async def volume(_, message):
     if len(message.command) < 2:
         await message.reply_text('You forgot to pass volume (1-200)')
-
     await group_call.set_my_volume(message.command[1])
 
 
