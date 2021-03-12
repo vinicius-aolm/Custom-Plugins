@@ -50,7 +50,7 @@ async def start_playout(client, message: Message):
     "volume",
     about={
         "header": "Set the volume of the bot in the voice chat",
-        "usage" "{tr}volume <1-200>"
+        "usage": "{tr}volume <1-200>"
     }
 )
 @init_client_and_delete_message
@@ -109,10 +109,10 @@ async def restart_playout(*_):
 
 
 @userge.on_cmd(
-    "stop_vc",
+    "stop",
     about={
         "header": "Stop the current playing track",
-        "usage": "{tr}stop_vc"
+        "usage": "{tr}stop"
     }
 )
 @init_client_and_delete_message
