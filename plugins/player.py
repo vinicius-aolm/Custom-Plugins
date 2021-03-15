@@ -18,13 +18,14 @@ How to use:
 """
 import os
 from datetime import datetime, timedelta
-from pyrogram import Client, filters, emoji
 from pyrogram.types import Message
 from pyrogram.methods.messages.download_media import DEFAULT_DOWNLOAD_DIR
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 from pytgcalls import GroupCall
 import ffmpeg
+
+from userge import userge, filters, emoji
 
 group_call = GroupCall(None, path_to_log_file='')
 playlist = []
@@ -108,7 +109,7 @@ async def playout_ended_handler(group_call, filename):
 # - Pyrogram handlers
 
 
-@Client.on_message(main_filter & current_vc & filters.regex("^(\\/|!)play$"))
+@userge.on_message(main_filter & current_vc & filters.regex("^(\\/|!)play$"))
 @init_client_for_group_call
 async def play_track(client, m: Message):
     # show playlist
@@ -142,7 +143,7 @@ async def play_track(client, m: Message):
         await download_audio(track)
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & current_vc
                    & filters.regex("^(\\/|!)current$"))
 @init_client_for_group_call
@@ -158,7 +159,7 @@ async def show_current_playing_time(client, m: Message):
     )
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & (self_or_contact_filter | current_vc)
                    & filters.regex("^(\\/|!)help$"))
 @init_client_for_group_call
@@ -166,7 +167,7 @@ async def show_help(client, m: Message):
     await m.reply_text(USERBOT_HELP)
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.command("skip", prefixes="!"))
@@ -194,7 +195,7 @@ async def skip_track(client, m: Message):
                                disable_web_page_preview=True)
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & filters.regex("^!join$"))
 @init_client_for_group_call
@@ -206,7 +207,7 @@ async def join_group_call(client, m: Message):
     await group_call.start(m.chat.id)
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.regex("^!leave$"))
@@ -217,7 +218,7 @@ async def leave_voice_chat(client, m: Message):
     await m.reply_text(f"{emoji.ROBOT} left the voice chat")
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & filters.regex("^!vc$"))
 @init_client_for_group_call
@@ -233,7 +234,7 @@ async def list_voice_chat(client, m: Message):
     await m.reply_text(f"{emoji.NO_ENTRY} didn't join any voice chat yet")
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.regex("^!stop$"))
@@ -245,7 +246,7 @@ async def stop_playing(_, m: Message):
     playlist.clear()
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.regex("^!replay$"))
@@ -261,7 +262,7 @@ async def restart_playing(client, m: Message):
     )
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.regex("^!clean$"))
@@ -281,7 +282,7 @@ async def clean_raw_pcm(client, m: Message):
     await m.reply_text(f"{emoji.WASTEBASKET} cleaned {count} files")
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.regex("^!mute$"))
@@ -291,7 +292,7 @@ async def mute(_, m: Message):
     await m.reply_text(f"{emoji.MUTED_SPEAKER} muted")
 
 
-@Client.on_message(main_filter
+@userge.on_message(main_filter
                    & self_or_contact_filter
                    & current_vc
                    & filters.regex("^!unmute$"))
