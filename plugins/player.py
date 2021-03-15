@@ -18,14 +18,14 @@ How to use:
 """
 import os
 from datetime import datetime, timedelta
-from pyrogram.types import Message
+from pyrogram import emoji
 from pyrogram.methods.messages.download_media import DEFAULT_DOWNLOAD_DIR
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 from pytgcalls import GroupCall
 import ffmpeg
 
-from userge import userge, filters, emoji
+from userge import userge, filters, Message
 
 group_call = GroupCall(None, path_to_log_file='')
 playlist = []
