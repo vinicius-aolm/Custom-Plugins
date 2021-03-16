@@ -1,2 +1,2 @@
 ffmpeg-python
-git+https://github.com/MarshalX/tgcalls.git@dev#subdirectory=pytgcalls
+git+https://github.com/MarshalX/tgcalls.git@master#subdirectory=pytgcalls
